@@ -1,0 +1,65 @@
+
+/* Query1: Which countries have the most Invoices? */
+SELECT
+  c.country,
+  COUNT(i.total) Total_Invoice
+FROM Customer c
+JOIN Invoice i
+  ON c.CustomerId = i.CustomerId
+GROUP BY 1
+ORDER BY 2 DESC
+
+
+
+/* Query2:Who are the best 10 customers? And from which Countries?*/ 
+
+SELECT
+  c.CustomerId,
+  SUM(i.Total) total_,
+  c.FirstName,
+  c.country
+FROM Invoice i
+JOIN customer c
+  ON i.CustomerId = c.CustomerId
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT  10
+
+
+
+
+/* Query3: Which city has the best customers? ... We would like to throw a promotional Music Festival in the city we made the most money. Write a query that returns the 1 city that has the highest sum of invoice totals. Return both the city name and the sum of all invoice totals*/
+
+
+SELECT
+  c.city,
+  SUM(i.total) Total_Invoice
+FROM Customer c
+JOIN Invoice i
+  ON c.CustomerId = i.CustomerId
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5
+
+
+
+
+/* Query4:Who are the best 5 writing the rock music? */
+
+SELECT
+  a.ArtistId Artist_Id,
+  a.name Artist_name,
+  COUNT(*)
+FROM Artist a
+JOIN Album al
+  ON a.ArtistId = al.ArtistId
+JOIN Track t
+  ON al.albumId = t.albumId
+JOIN Genre g
+  ON g.GenreId = t.GenreId
+
+WHERE g.name = 'Rock'
+
+GROUP BY 1,2
+ORDER BY 3 DESC
+limit 5
